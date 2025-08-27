@@ -1,16 +1,21 @@
-import pytest
 import time
+
+import pytest
+
 from hiero_sdk_python.account.account_id import AccountId
-from hiero_sdk_python.client.network import Network
 from hiero_sdk_python.client.client import Client
+from hiero_sdk_python.client.network import Network
+from hiero_sdk_python.consensus.topic_id import TopicId
+from hiero_sdk_python.contract.contract_id import ContractId
+from hiero_sdk_python.crypto.private_key import PrivateKey
+from hiero_sdk_python.file.file_id import FileId
+from hiero_sdk_python.hapi.services import timestamp_pb2
 from hiero_sdk_python.logger.log_level import LogLevel
 from hiero_sdk_python.node import _Node
-from hiero_sdk_python.consensus.topic_id import TopicId
-from hiero_sdk_python.crypto.private_key import PrivateKey
 from hiero_sdk_python.tokens.nft_id import NftId
 from hiero_sdk_python.tokens.token_id import TokenId
 from hiero_sdk_python.transaction.transaction_id import TransactionId
-from hiero_sdk_python.hapi.services import timestamp_pb2
+
 
 @pytest.fixture
 def mock_account_ids():
@@ -52,12 +57,22 @@ def nft_id():
     """Fixture to provide a mock NftId instance."""
     token_id = TokenId(shard=0, realm=0, num=1)
     serial_number = 8
-    return NftId(tokenId=token_id, serialNumber=serial_number)
+    return NftId(token_id=token_id, serial_number=serial_number)
 
 @pytest.fixture
 def token_id():
     """Fixture to provide a mock TokenId instance."""
     return TokenId(shard=0, realm=0, num=3)
+
+@pytest.fixture
+def file_id():
+    """Fixture to provide a mock FileId instance."""
+    return FileId(shard=0, realm=0, file=2)
+
+@pytest.fixture
+def contract_id():
+    """Fixture to provide a mock ContractId instance."""
+    return ContractId(shard=0, realm=0, contract=1)
 
 @pytest.fixture
 def mock_client():

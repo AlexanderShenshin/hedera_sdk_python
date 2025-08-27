@@ -21,7 +21,7 @@ def test_integration_topic_info_query_can_execute():
         
         assert create_receipt.status == ResponseCode.SUCCESS, f"Topic creation failed with status: {ResponseCode(create_receipt.status).name}"
         
-        topic_id = create_receipt.topicId
+        topic_id = create_receipt.topic_id
         
         topic_info = TopicInfoQuery(topic_id=topic_id).execute(env.client)
         
@@ -29,8 +29,8 @@ def test_integration_topic_info_query_can_execute():
         
         assert topic_info.memo == "Topic for info query"
         assert topic_info.sequence_number == 0
-        assert env.client.operator.private_key.public_key().to_string() == topic_info.admin_key.ed25519.hex()
-        
+        assert env.client.operator_private_key.public_key()._to_proto() == topic_info.admin_key
+
         delete_transaction = TopicDeleteTransaction(topic_id=topic_id)
         delete_transaction.freeze_with(env.client)
         delete_receipt = delete_transaction.execute(env.client)
