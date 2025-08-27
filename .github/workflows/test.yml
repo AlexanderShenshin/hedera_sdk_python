@@ -34,29 +34,29 @@ jobs:
       - name: Generate Proto Files
         run: bash ./generate_proto.sh
 
-      - name: Prepare Hiero Solo
-        id: solo
-        uses: hiero-ledger/hiero-solo-action@71219540ac7f578e6ea4fc3c17575c0295e56163 # v0.9
-        with:
-          installMirrorNode: true
+#      - name: Prepare Hiero Solo
+#        id: solo
+#        uses: hiero-ledger/hiero-solo-action@71219540ac7f578e6ea4fc3c17575c0295e56163 # v0.9
+#        with:
+#          installMirrorNode: true
 
       - name: Set environment variables
         run: |
-          echo "OPERATOR_ID=${{ steps.solo.outputs.accountId }}"
-          echo "OPERATOR_KEY=${{ steps.solo.outputs.privateKey }}"
-          echo "ADMIN_KEY=${{ steps.solo.outputs.privateKey }}"
-          echo "PUBLIC_KEY=${{ steps.solo.outputs.publicKey }}"
+          echo "OPERATOR_ID=0.0.5489553"
+          echo "OPERATOR_KEY=302e020100300506032b6570042204209f54b75b6238ced43e41b1463999cb40bf2f7dd2c9fd4fd3ef780027c016a138"
+          echo "ADMIN_KEY=302e020100300506032b6570042204209f54b75b6238ced43e41b1463999cb40bf2f7dd2c9fd4fd3ef780027c016a138"
+          echo "PUBLIC_KEY=302a300506032b65700321004204083b282d4892878b649b57c523d8ff3f8c0b3f44e9dc8b613a5ba0f3bf29"
 
       - name: Install your package
         run: pip install -e .
 
       - name: Run integration tests
         env:
-          OPERATOR_ID: ${{ steps.solo.outputs.accountId }}
-          OPERATOR_KEY: ${{ steps.solo.outputs.privateKey }}
-          ADMIN_KEY: ${{ steps.solo.outputs.privateKey }}
-          PUBLIC_KEY: ${{ steps.solo.outputs.publicKey }}
-          NETWORK: solo
+          OPERATOR_ID: 0.0.5489553
+          OPERATOR_KEY: 302e020100300506032b6570042204209f54b75b6238ced43e41b1463999cb40bf2f7dd2c9fd4fd3ef780027c016a138
+          ADMIN_KEY: 302e020100300506032b6570042204209f54b75b6238ced43e41b1463999cb40bf2f7dd2c9fd4fd3ef780027c016a138
+          PUBLIC_KEY: 302a300506032b65700321004204083b282d4892878b649b57c523d8ff3f8c0b3f44e9dc8b613a5ba0f3bf29
+          NETWORK: testnet
         run: |
           uv run pytest -m integration
 
